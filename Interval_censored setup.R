@@ -3,7 +3,8 @@ library(cmdstanr)
 library(bayesplot)
 library(posterior)
 
-setwd("~/R/Generalized Gamma")
+#User data path
+setwd("~/R/Generalized Gamma")  
 
 #Data from Schmittlen and Morrison 1980
 
@@ -20,6 +21,7 @@ data_list <- list(
   R = 315-sum(Dropped)
 )
 
+#Pick a file
 file <- file.path("Weibull_interval.stan")
 modv7<- cmdstan_model(file,stanc_options = list("O1"), quiet=TRUE)
 
