@@ -4,12 +4,12 @@ This repository contains the Stan codes that I wrote for various Interval Censor
 
 The data used are from an 1980 paper in the Organizational Behavior and Human Performance journal, written by Morrison and Schmittlein.  A copy is attached.
 
-Interval censored models are not well-convered in the Stan manuel, despite its popularity in real-life applications.
+Interval censored models are not well-covered in the Stan manuel, despite its popularity in real-life applications.
 
-Two Weibull models are considered for this exercise. 
+Two Weibull models are considered for this exercise as of September 25th, 2022. I plan to add more models in the future.
 
-The Stan code's generating quantities block consider parameter uncertainty and process uncertainy.  
+A noteworth point is that in the Stan code's generating quantities block, I consider both parameter uncertainty and process uncertainy.  
 
-I use cmdstanR to interface with Stan. Users are welcome to use them.  
+I use cmdstanR to interface with Stan. Users are welcome to use the codes as they see fit.  
 
-Please cite this repository if you do use any code.  Thank you.
+Please cite this repository if you do use the codes.  Thank you.
