@@ -38,6 +38,7 @@ fit_K <- mod_K$sample(
   ,adapt_delta = 0.99
   ,  max_treedepth = 20
 )
+#Some divergent draws are observed.  I believe the problem is that the data are not well-suited for this model.
 
 fit_K$summary()
 fit_K$draws(c( "predicted")) %>% summarise_draws("mean", "quantile2", "rhat", .cores=getOption("mc.cores", 1))
@@ -123,7 +124,7 @@ ggplot() +
   theme(plot.title = element_text(hjust = 0.5)) +
   guides(fill=guide_legend(title="")) +
   theme_bw()
-#see the graph "histograms.png"
+#see the graph "histograms_seg.png"
 
 #Compare the chi-sq fit statistics
 chi_sq <- posteriorW %>%
@@ -132,7 +133,7 @@ chi_sq <- posteriorW %>%
   bind_rows( posteriorE %>% 
              mutate(type = "2seg Exponential") %>%
              select(type, chi_sq) 
-           )%>%
+           ) %>%
   bind_rows( posteriorK %>% 
              mutate(type = "2seg Weibull") %>%
              select(type, chi_sq)             
@@ -142,4 +143,4 @@ ggplot(chi_sq, aes(x=chi_sq, fill=type)) +
   geom_density(alpha=.15) +
   guides(fill=guide_legend(title=""))+
   theme_bw()
-#see the graph "chi_sq.png"
+#see the graph "chi_sq_seg.png"
