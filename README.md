@@ -8,7 +8,7 @@ Interval censored models are not well-covered in the Stan manuel, despite its po
 
 Initially, two Weibull models are considered for this exercise . A standard Weibull model can leverage the built-in Stan functions. A Weibull-Gamma model requires customized functions.  
 
-In a follow-up exercise I consider finite mixture models.  For the Morrison and Schmittlein data at hand, these models are not necessary.  I nevertheless share what I did as a way to summarize the finite mixture coding for future use.
+In a follow-up exercise I consider finite mixture models.  For the Morrison and Schmittlein data at hand, these models are not necessary.  I nevertheless share what I did as a way to summarize the finite mixture coding, which may be useful for future use.
 
 A noteworth point is that in the Stan code's generating quantities block, I consider both parameter uncertainty and process uncertainy.  
 
