@@ -156,4 +156,4 @@ ggplot(chi_sq, aes(x=chi_sq, fill=type)) +
   geom_density(alpha=.2) +
   guides(fill=guide_legend(title=""))+
   theme_bw()
-#see the graph "chi_sq.png"
+#see the graph "chi_sq.png" - Weibull fits better than WG accordingly
