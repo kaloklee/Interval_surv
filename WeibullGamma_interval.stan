@@ -26,7 +26,7 @@ data {
   
   int<lower=0> N; 
   
-  int<lower=0> R; // remaining people
+  real<lower=0> R; // remaining people
 
 }
 
@@ -59,7 +59,7 @@ model {
                                     ) ;              
   }
   
-   target +=  R * (gamma_Weibull_log_surv(T,alpha, r, c));
+   target +=  R * (gamma_Weibull_log_surv(Tend[T],alpha, r, c));
 
 }
 
