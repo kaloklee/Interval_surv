@@ -72,12 +72,12 @@ generated quantities{
    
    for (i in 1:T) {
 
-       expected[i]=N*exp(log_diff_exp( gamma_Weibull_log_surv(i-1,alpha, r, c),
-                                       gamma_Weibull_log_surv(i  ,alpha, r, c) 
+       expected[i]=N*exp(log_diff_exp( gamma_Weibull_log_surv(Tstart[i],alpha, r, c),
+                                       gamma_Weibull_log_surv(Tend[i]  ,alpha, r, c) 
                                       )
                          );
    }
-   expected[T+1]=N*exp(gamma_Weibull_log_surv(T+1,alpha, r, c));
+   expected[T+1]=N*exp(gamma_Weibull_log_surv(Tend[T],alpha, r, c));
    
    for (j in 1:N) {
       vector[N] time;
