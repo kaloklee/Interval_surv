@@ -14,7 +14,7 @@ data {
   
   int<lower=0> N; //number of observations
   
-  int<lower=0> R; // remaining after T
+  real<lower=0> R; // remaining after T
 
 }
 
@@ -36,10 +36,10 @@ model {
   
   for (i in 2:T) {
                           
-   target += Dropped[i] * log_diff_exp(weibull_lcdf(Tend[i] | c, lambda),weibull_lcdf(Tstart[i] | c, lambda));
+   target += Dropped[i] * log_diff_exp(weibull_lccdf(Tend[i] | c, lambda),weibull_lccdf(Tstart[i] | c, lambda));
                            
   }
-  target += R * weibull_lccdf(T | c, lambda) ;
+  target += R * weibull_lccdf(Tend[T] | c, lambda) ;
 
 }
 
@@ -55,12 +55,12 @@ generated quantities{
    
    for (i in 1:T) {
 
-       expected[i]=N*exp(log_diff_exp( weibull_lccdf(i-1 | c, lambda),
-                                        weibull_lccdf(i | c, lambda) 
+       expected[i]=N*exp(log_diff_exp( weibull_lccdf(Tstart[i] | c, lambda),
+                                        weibull_lccdf(Tend[i] | c, lambda) 
                                       )
                          );
    }
-   expected[T+1]=N*exp(weibull_lccdf(T+1 | c, lambda));
+   expected[T+1]=N*exp(weibull_lccdf(Tend[T] | c, lambda));
    
    for (j in 1:N) {
       vector[N] time;
