@@ -14,7 +14,7 @@ data {
   
   int<lower=0> N; //number of observations
   
-  int<lower=0> R; // remaining after T
+  real<lower=0> R; // remaining after T
   
   int<lower=0> K; //number of segments
 
@@ -47,13 +47,13 @@ model {
    vector[K] lps2;
    for (k in 1:K) {
       lps2[k] = log_w[k] + 
-                log_diff_exp(exponential_lcdf(Tend[i] | lambda[k]),exponential_lcdf(Tstart[i] | lambda[k]));
+                log_diff_exp(exponential_lccdf(Tstart[i] | lambda[k]),exponential_lccdf(Tend[i] | lambda[k]));
    }  
    target += Dropped[i] * log_sum_exp(lps2);
   }
   
   for (k in 1:K) {
-    lps3[k] = log_w[k] + exponential_lccdf(T |  lambda[k]);
+    lps3[k] = log_w[k] + exponential_lccdf(Tend[T] |  lambda[k]);
   }
   target += R * log_sum_exp(lps3) ;
 
@@ -74,28 +74,26 @@ generated quantities{
       for (k in 1:K) {
         if (i <= T) 
         
-            lps2[k] = log( w[k] ) + log_diff_exp(exponential_lccdf(i-1 | lambda[k]),
-                                               exponential_lccdf(i | lambda[k])
+            lps2[k] = log( w[k] ) + log_diff_exp(exponential_lccdf(Tstart[i] | lambda[k]),
+                                               exponential_lccdf(Tend[i] | lambda[k])
                                               );
         
-        else lps2[k] = log( w[k] ) + exponential_lccdf( T+1 | lambda[k] ) ;
+        else lps2[k] = log( w[k] ) + exponential_lccdf( Tend[T] | lambda[k] ) ;
       }
     
       expected[i]=N*exp(log_sum_exp(lps2));
     }
     
     
-    
-
     for (j in 1:N) {
        vector[N] time;
        int seg;
        seg = categorical_rng(w);
        time[j] = exponential_rng(lambda[seg]);
        for (t in 1:T)  {
-         predicted[t] += ( time[j]> t-1 && time[j]<= t );
+         predicted[t] += ( time[j]> Tstart[t] && time[j]<= Tend[t] );
        }
-       predicted[T+1] += ( time[j]>T );
+       predicted[T+1] += ( time[j]> Tend[T] );
 
    }
 
