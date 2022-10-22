@@ -85,9 +85,9 @@ generated quantities{
       F[j] = uniform_rng(0,1);
       time[j] = pow(-alpha*(1 - pow(1 - F[j],-inv(r))),inv(c));
       for (t in 1:T)  {
-        predicted[t] += ( time[j]> t-1 && time[j]<= t );  
+        predicted[t] += ( time[j]> Tstart[t] && time[j]<= Tend[t] );  
       }
-      predicted[T+1] += ( time[j]>T );
+      predicted[T+1] += ( time[j]> Tend[T] );
 
   }
   
