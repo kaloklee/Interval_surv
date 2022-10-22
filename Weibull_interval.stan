@@ -36,7 +36,7 @@ model {
   
   for (i in 2:T) {
                           
-   target += Dropped[i] * log_diff_exp(weibull_lccdf(Tend[i] | c, lambda),weibull_lccdf(Tstart[i] | c, lambda));
+   target += Dropped[i] * log_diff_exp(weibull_lccdf(Tstart[i] | c, lambda),weibull_lccdf(Tend[i] | c, lambda));
                            
   }
   target += R * weibull_lccdf(Tend[T] | c, lambda) ;
@@ -66,9 +66,9 @@ generated quantities{
       vector[N] time;
       time[j] = weibull_rng(c, lambda);
       for (t in 1:T)  {
-        predicted[t] += ( time[j]> t-1 && time[j]<= t );  
+        predicted[t] += ( time[j]> Tstart[t] && time[j]<= Tend[t] );  
       }
-      predicted[T+1] += ( time[j]>T );
+      predicted[T+1] += ( time[j]> Tend[T] );
 
   }
   
