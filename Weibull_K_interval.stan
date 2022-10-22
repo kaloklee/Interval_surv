@@ -14,7 +14,7 @@ data {
   
   int<lower=0> N; //number of observations
   
-  int<lower=0> R; // remaining after T
+  real<lower=0> R; // remaining after T
   
   int<lower=0> K; //number of segments
 
@@ -49,13 +49,13 @@ model {
    vector[K] lps2;
    for (k in 1:K) {
       lps2[k] = log_w[k] + 
-                log_diff_exp(weibull_lcdf(Tend[i] | c[k], lambda[k]),weibull_lcdf(Tstart[i] | c[k], lambda[k]));
+                log_diff_exp(weibull_lccdf(Tstart[i] | c[k], lambda[k]),weibull_lccdf(Tend[i] | c[k], lambda[k]));
    }  
    target += Dropped[i] * log_sum_exp(lps2);
   }
   
   for (k in 1:K) {
-    lps3[k] = log_w[k] + weibull_lccdf(T | c[k], lambda[k]);
+    lps3[k] = log_w[k] + weibull_lccdf(Tend[T] | c[k], lambda[k]);
   }
   target += R * log_sum_exp(lps3) ;
 
@@ -76,11 +76,11 @@ generated quantities{
       for (k in 1:K) {
         if (i <= T) 
         
-            lps2[k] = log( w[k] ) + log_diff_exp(weibull_lccdf(i-1 | c[k],lambda[k]),
-                                               weibull_lccdf(i | c[k],lambda[k])
+            lps2[k] = log( w[k] ) + log_diff_exp(weibull_lccdf(Tstart[i] | c[k],lambda[k]),
+                                               weibull_lccdf(Tend[i] | c[k],lambda[k])
                                               );
         
-        else lps2[k] = log( w[k] ) + weibull_lccdf( T+1 | c[k],lambda[k] ) ;
+        else lps2[k] = log( w[k] ) + weibull_lccdf( Tend[T] | c[k],lambda[k] ) ;
       }
     
       expected[i]=N*exp(log_sum_exp(lps2));
@@ -95,9 +95,9 @@ generated quantities{
        seg = categorical_rng(w);
        time[j] = weibull_rng(c[seg],lambda[seg]);
        for (t in 1:T)  {
-         predicted[t] += ( time[j]> t-1 && time[j]<= t );
+         predicted[t] += ( time[j]> Tstart[t] && time[j]<= Tend[t] );
        }
-       predicted[T+1] += ( time[j]>T );
+       predicted[T+1] += ( time[j]> Tend[T] );
 
    }
 
