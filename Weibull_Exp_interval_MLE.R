@@ -98,12 +98,12 @@ Expected = WE_exp(solution$par,Tstart,Tend,315)
 Expected
 
 a1 <- data.frame( value = Expected,
-                  type = rep("Model",11))
+                  type = c("Model"))
 a2 <- data.frame( value = c(Dropped,315-sum(Dropped)),
                   type = c("Actual"))
 
 result<-data.frame(cbind(
-  x=rep(c("0-1","1-2","2-3","3-4","4-5","5-6","6-7","7-8","8-9","9-10",">10"),2),
+  x=c("0-1","1-2","2-3","3-4","4-5","5-6","6-7","7-8","8-9","9-10",">10"),
   rbind(a1,a2)))
 
 result$x2 <- factor(result$x, levels=c("0-1","1-2","2-3","3-4","4-5","5-6","6-7","7-8","8-9","9-10",">10"))
