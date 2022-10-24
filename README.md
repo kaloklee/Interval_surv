@@ -15,3 +15,5 @@ A noteworth point is that in the Stan code's generating quantities block, I cons
 I use cmdstanR as interface with Stan. Users are welcome to use the codes as they see fit.  
 
 Please cite this repository if you do use the codes.  Thank you.
+
+BONUS: I coded a mixture model of Weibull and Exponential in MLE.  Putting it here for future use.
