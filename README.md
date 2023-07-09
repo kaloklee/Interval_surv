@@ -15,9 +15,10 @@ The data are taked from a 1980 paper in the Organizational Behavior and Human Pe
 
 ## Where to begin
 
-`Weibull_interval.stan` and `WeibullGamma_interval.stan` are the two main Stan files that I wrote for the Weibull and the Weibull-Gamma distributions.  
-
 The user may run `Interval_censored setup.R` to follow what I am doing.  I am sure it is straight-forward to follow.
+
+`Weibull_interval.stan` and `WeibullGamma_interval.stan` are the two main Stan files that I wrote for the Weibull and the Weibull-Gamma distributions.  
+A noteworth point is that in the Stan code's generating quantities block, I consider both parameter uncertainty and process uncertainy.  
 
 ## Changes
 
@@ -25,10 +26,12 @@ Initially, two Weibull models are considered for this exercise . A standard Weib
 
 In a follow-up exercise I consider finite mixture models.  For the Morrison and Schmittlein data at hand, these models are not necessary.  I nevertheless share what I did as a way to summarize the finite mixture coding, which may be useful for future use.
 
-A noteworth point is that in the Stan code's generating quantities block, I consider both parameter uncertainty and process uncertainy.  
+## Final words
 
 I use cmdstanR as interface with Stan. Users are welcome to use the codes as they see fit.  
 
 Please cite this repository if you do use the codes.  Thank you.
 
-BONUS: I coded a mixture model of Weibull and Exponential in MLE.  Putting them in this repository for future use.
+## Bonus
+
+I coded a mixture model of Weibull and Exponential using MLE in R.  Putting them in this repository for future use.
